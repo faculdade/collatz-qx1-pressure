@@ -17,7 +17,7 @@ detailed, covers every file), and run the indicated commands.
 
 | Folder | Paper sections | What it verifies | Expected result |
 |---|---|---|---|
-| `sec3-pressure-and-transition/` | §3–§7 | The pressure identity (transfer-operator eigenvalue vs.\ closed form), the two roots of $q^{\alpha-1}=2^\alpha-1$ and the structural transition at $q=5$, the freezing computation, the $L^2/L^p$ collision spectrum, the tail-index battery of estimators at $q=5$ (multiple rounds, including the large pre-registered follow-up), and empirical counting-slope confirmation on real reverse trees | root table ($\alpha^\ast(3)=2$ exact, $\alpha^\ast(5)=0.650919$, etc.); transfer-operator eigenvalue matches closed form to machine precision at every $(q,k,\alpha)$ tested; tail-index battery mixed at $n=5000$, confirmatory at the pre-registered $n=10^5$ follow-up |
+| `sec3-pressure-and-transition/` | §3–§7 | The pressure identity (transfer-operator eigenvalue vs.\ closed form), the two roots of $q^{\alpha-1}=2^\alpha-1$ and the structural transition at $q=5$, the freezing computation, the $L^2/L^p$ collision spectrum, the tail-index battery of estimators at $q=5$ (multiple rounds, including a large follow-up at $20\times$ the sample size), and empirical counting-slope confirmation on real reverse trees | root table ($\alpha^\ast(3)=2$ exact, $\alpha^\ast(5)=0.650919$, etc.); transfer-operator eigenvalue matches closed form to machine precision at every $(q,k,\alpha)$ tested; tail-index battery mixed at $n=5000$, confirmatory at the $n=10^5$ follow-up |
 
 ## Requirements
 

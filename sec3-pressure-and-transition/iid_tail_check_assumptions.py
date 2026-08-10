@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Check the closed-form hypotheses for the iid tail theorem in paper 01."""
+"""Check the closed-form hypotheses for the iid tail theorem in paper 06."""
 
 from __future__ import annotations
 

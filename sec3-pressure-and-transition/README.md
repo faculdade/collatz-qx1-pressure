@@ -51,8 +51,8 @@ $q=5$.
   the transient (branch weights are powers of 2): derives the
   theoretical period via the arithmetic/non-arithmetic dichotomy of
   implicit renewal theory (log₂5 is irrational ⟹ no asymptotic
-  log-periodicity expected), then tests this in a pre-registered
-  periodogram. Self-contained (reuses `csn_fit`/`generate_raw_samples`
+  log-periodicity expected), then tests this against a periodogram
+  computed on the data. Self-contained (reuses `csn_fit`/`generate_raw_samples`
   from `full_battery.py`).
 - **`stage4_type_constants_check.py`** — tests the prediction of an
   exact scale family by the root's residue type ($u_0\bmod5$):

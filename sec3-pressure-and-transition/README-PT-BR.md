@@ -51,8 +51,8 @@ satisfaz $q^{\alpha-1}=2^\alpha-1$, com transição estrutural em $q=5$.
   transiente (pesos dos ramos são potências de 2): deriva o período
   teórico via a dicotomia aritmético/não-aritmético da teoria de
   renovação implícita (log₂5 é irracional ⟹ sem log-periodicidade
-  assintótica esperada), depois testa isso num periodograma
-  pré-registrado. Autocontido (reusa `csn_fit`/`generate_raw_samples`
+  assintótica esperada), depois testa isso contra um periodograma
+  calculado sobre os dados. Autocontido (reusa `csn_fit`/`generate_raw_samples`
   de `full_battery.py`).
 - **`stage4_type_constants_check.py`** — testa a previsão de família de
   escala exata por tipo de resíduo do raiz ($u_0\bmod5$): confirma
