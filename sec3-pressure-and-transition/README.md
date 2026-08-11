@@ -39,13 +39,13 @@ $q=5$.
   Self-contained, reuses `count_tree` from `empirical_qx1_tree.py`.
 - **`tail_index_q5_rigorous.py`**: the first version of the $W_v$
   tail-index test for $q=5$: 5000 roots, 4 headroom levels
-  ($10^5$–$10^8$), Hill estimator with bootstrap CI at 4 tail
+  ($10^5$-$10^8$), Hill estimator with bootstrap CI at 4 tail
   fractions, plus an independent rank-size (Zipf) regression.
   Superseded by `full_battery.py` below (kept for history). Reference
   result in `tail_index_q5_results_reference.json`.
 - **`full_battery.py`**: a full battery of 4 estimators on the same
   sample (5000 roots, 4 headrooms): Gabaix-Ibragimov regression
-  (rank−1/2 correction), bias-corrected Hill (Huisman et al.), GPD MLE
+  (rank-1/2 correction), bias-corrected Hill (Huisman et al.), GPD MLE
   with threshold-stability sweep, and Clauset-Shalizi-Newman + Vuong
   test against truncated lognormal. Self-contained (generates its own
   samples via `count_tree`). See "Result" below.
@@ -85,7 +85,8 @@ $q=5$.
   battery of 4 estimators, plus two sanity calibrations (an exact
   synthetic Pareto null; invariance to a deliberately wrong
   normalization exponent). See "Result" below; this is the strongest
-  evidence gathered for the Tail-Index Conjecture.
+  evidence gathered for the real-tree tail conjecture
+  (`conj:real-tree-tail`, paper §4).
 
 - **`experiment_type_rescaling_sterility.py`**: tests whether the
   type-rescaling family ($W_i\stackrel{d}{=}2^{-a_0(i)\theta}\cdot
@@ -100,18 +101,44 @@ $q=5$.
 
 - **`iid_tail_check_assumptions.py`**: for the additive martingale at
   the smaller pressure root, in the matching i.i.d. branching model,
-  checks numerically the four hypotheses of Liu's (2000) implicit
-  renewal theorem (Theorem 2.2): non-degeneracy
-  ($\psi'(1)<0$), existence of the second zero $\kappa>1$, finite
-  moments in a compact neighborhood, and the non-lattice condition
-  (irrationality of $\log q/\log2$). Backs
-  Theorem (`thm:iid-tail` in the paper) (paper §3).
+  checks numerically the four hypotheses of the implicit renewal
+  theorem underlying `thm:iid-tail`: $\rho_{\mathrm{ann}}(\alpha_-)=1$,
+  $\rho_{\mathrm{ann}}(\alpha_+)=1$ (equivalently $\kappa=\alpha_+/\alpha_-$
+  solves the second-zero condition), non-degeneracy ($\psi'(1)<0$), and
+  the non-lattice condition. The printed `irrationality_check` column
+  is a parity test ($\gcd(q,2)=1$), not a literal irrationality check;
+  for odd $q$ it is a sufficient proxy, since an odd $q>1$ is never a
+  power of $2$ and so $\log q/\log2$ is automatically irrational. Backs
+  Theorem (`thm:iid-tail` in the paper) (paper §5).
 - **`lp_collision_spectrum.py`**: evaluates the $L^p$ collision
   statistic $\|M_\ell\|_p^p=3^{\ell(p-1)}\sum_x\mu_\ell(x)^p$ for
   several $p$, reusing the same recursion as the endogeny-barrier
   companion paper's $L^2$ growth measurement (\S3 of the paper, remark
   following `thm:lp-collision`). Backs
   Theorem (`thm:lp-collision` in the paper) (paper §3).
+- **`annealed_identity_direct_enumeration.py`**: verifies the annealed
+  pressure identity $\sum_{u_0}Z_k(\alpha;u_0)=(q^\alpha/(2^\alpha-1))^k$
+  by direct enumeration of $Z_k(\alpha;u_0)$ over every root residue,
+  for $q\in\{3,5,7,9\}$, $k\in\{1,2,3\}$,
+  $\alpha\in\{0.26,0.5,1,1.37,2\}$: the exact parameters cited in the
+  paper (§3). Independent of `pressure_qx1.py`'s eigenvalue check
+  (a different object; see the note in `pressure_qx1.py`'s docstring).
+- **`alpha_c_table.py`**: computes $\alpha_c(q)$, the root of the
+  entropy $s(\alpha)=P(\alpha)-\alpha P'(\alpha)$, for
+  $q\in\{3,5,7,9\}$, and confirms
+  $\alpha_-(q)<\alpha_c(q)<\alpha_+(q)$ (paper §4 table, following
+  Proposition~`prop:always-frozen`).
+- **`quenched_fixed_root_oscillation.py`**: computes $Z_k(\alpha;u_0)$
+  by an exact memoized recursion at a single fixed root, for $q=3$,
+  $u_0=1$, $\alpha=2$, and for $q=5$, $\alpha=1$,
+  $u_0\in\{1,2,3,4\}$, showing $Z_k^{1/k}$ fails to track
+  $\rho_{\mathrm{ann}}=1$ in both cases (paper §4, the quenched/annealed
+  divergence at these periodic roots).
+- **`increment_ratio_powerlaw_fit_attempt.py`**: reproduces the failed
+  power-law fit to the increment-ratio decay of $M_k(p)$ mentioned in
+  paper §4 (`exact_moment_test.py`'s data, $k=5,\ldots,11$): the fitted
+  exponent varies from $-0.72$ to $+0.85$ across
+  $p\in[1.2,2.0]$, confirming it does not converge to a stable value.
 
 ## How to run
 
@@ -133,6 +160,10 @@ python3 stage6_calibration_checks.py        # ~2 min, same
 python3 experiment_type_rescaling_sterility.py  # ~11s, both q=7 and q=15
 python3 iid_tail_check_assumptions.py           # <1s
 python3 lp_collision_spectrum.py                # a few seconds up to ell=14
+python3 annealed_identity_direct_enumeration.py # ~1 min
+python3 alpha_c_table.py                        # <1s
+python3 quenched_fixed_root_oscillation.py      # ~1 min (q=5, k up to 16, per root)
+python3 increment_ratio_powerlaw_fit_attempt.py # <1s (reads exact_moment_results_reference.json)
 ```
 
 ## Expected result (`pressure_qx1.py`)
@@ -175,44 +206,54 @@ of each other's methodology, both consistent with $\alpha^\ast=2$.
 
 ## Result (`full_battery.py`): a mixed, non-confirmatory picture
 
-Bias-corrected Hill (Huisman) is stable across headrooms and lands
-close to the predicted 1.536, but the threshold-stability sweep (GPD)
-shows no clean plateau, and the Vuong test favors the **lognormal**
-alternative over the power law, with significance, in 3 of the 4
-headroom levels. Reading the 4 estimators by the tail depth each one
-summarizes, the apparent local index rises smoothly from ~1.3 (wide
-window) to ~2.2 (narrow window), without stabilizing near a single
-value. Consistent with slow pre-asymptotic convergence, neither
-confirmation nor refutation.
+Bias-corrected Hill (Huisman) is stable across headrooms at
+1.606-1.614, some 4-5% above the predicted 1.536, with a 95%
+confidence interval that still covers it. The threshold-stability
+sweep (GPD) shows no clean plateau, and the Vuong test favors the
+**lognormal** alternative over the power law, with significance, in 3
+of the 4 headroom levels. Reading the 4 estimators by the tail depth
+each one summarizes, the apparent local index climbs from ~1.3 (wide
+window) to ~2.4 at deep, but not the deepest, quantiles; the single
+deepest GPD threshold tested (top 1%, only 50 exceedances) breaks this
+climb, dropping back to 1.66. Consistent with slow pre-asymptotic
+convergence, neither confirmation nor refutation.
 
 ## Result (`exact_moment_test.py`): inconclusive, with the reason identified
 
-Sanity check: $M_k(1.0)=1.0$ exactly at every $k$ (forced by the
-annealed pressure identity, the Theorem from §3, confirming the
-implementation). For the tail index itself: $M_k(p)$ saturates
+Sanity check: $M_k(1.0)=1.0$ to within $2\times10^{-11}$ at $k=11$
+(forced by the annealed pressure identity, the Theorem from §3), the
+residual coming from the finite cutoff $a\le60$ in the sum defining
+$Z_k$, not from floating-point precision, confirming the
+implementation. For the tail index itself: $M_k(p)$ saturates
 (decreasing increments) for $p\le1.6$ and diverges (increasing
 increments) for $p\ge1.7$, which would place the real index above the
 predicted 1.536 if taken at face value. But the RATIO between
-successive increments still hasn't stabilized for $p\le1.6$ at $k=11$
-(unlike $p\ge1.7$, already stable), the classic signature of a system
-still relaxing, not one that has already converged. A power-law fit to
-the increment-ratio decay across $k=5,\ldots,11$ did not converge to a
-stable exponent (the fitted rate varied by a factor of several across
-nearby values of $p$, the signature of an underpowered fit at five
-correlated points; see the terminology correction below for the
+successive increments is still drifting at $k=11$ on both sides of the
+divide, by a comparable amount (under 0.2% per step throughout
+$p\in[1.6,1.8]$), the classic signature of a system still relaxing,
+not one where one side has converged and the other has not. A
+power-law fit (`increment_ratio_powerlaw_fit_attempt.py`) to the
+increment-ratio decay across $k=5,\ldots,11$ did not converge to a
+stable exponent: the fitted rate ranges from $-0.72$ to $+0.85$ across
+$p\in[1.2,2.0]$, the signature of an underpowered fit at six
+correlated points (see the terminology correction below for the
 now-superseded "$k^{-0.222}$" figure this fit was checked against), so
 there is no reliable measurement of how quickly the transient decays,
 and no way to say how much larger $k$ would need to be. **Inconclusive,
 not disconfirming**: this method cannot distinguish between the
 predicted value sitting just below the real index or well below it.
 
-## Terminology correction: the $k^{-0.222}$ transient is NOT spectral
+## Terminology: the exact-test transient is not spectral
 
-A note from an earlier session attributed this transient to "a
-subdominant complex root of the transfer operator." That attribution
-was **wrong**. `experiment_gap_check.py` confirms exactly the correct
-formalization (the dual operator $M_\alpha$ has spectrum
-$\{\Lambda,0\}$, a perfect gap, no isolated subdominant eigenvalue).
+The $k^{-0.222}$ figure does not appear in the paper; it was an early,
+now-superseded candidate value for the transient's decay rate,
+retained here only for continuity with the hypothesis notes cited
+below. The transient is not a subdominant complex root of a finite
+transfer operator: `experiment_gap_check.py` shows the dual operator
+$M_\alpha$'s spectrum on level-$K$ locally constant functions is
+numerically $\{\Lambda,0\}$, with every other eigenvalue below
+$2\times10^{-4}$ in magnitude at every truncation level $K\le4$
+tested, no isolated subdominant eigenvalue at that resolution.
 `stage2_periodogram.py` tests and refutes the alternative hypothesis
 that the transient was log-periodic. The exact origin of the exponent
 $0.222$ remains unlocated; see
@@ -222,7 +263,7 @@ record of this investigation.
 ## Result (`stage4_type_constants_check.py`): scale family confirmed, doesn't test κ
 
 Quantile ratios by residue type match the prediction
-$W_i\stackrel{d}{=}2^{-a_0(i)\theta}\cdot W^*$ to within 1–19%
+$W_i\stackrel{d}{=}2^{-a_0(i)\theta}\cdot W^*$ to within 1-19%
 deviation (36 type-pair/quantile/headroom comparisons; most under 10%,
 the loosest is the top-20% quantile for the type with smallest
 predicted scale), across all 4 headrooms and 3 tested tail levels, stable
@@ -233,14 +274,19 @@ the multi-type decomposition, not $\kappa$.
 ## Result (Stage 6: 20× larger sample): evidence moves from inconclusive to strongly favorable
 
 With 100,000 roots (vs. 5,000 in earlier rounds): GPD shows a clean
-threshold plateau for the first time (ξ stable ≈0.63–0.68 across all 9
+threshold plateau for the first time (ξ stable ≈0.63-0.68 across all 9
 tested threshold levels, predicted 0.6509); Huisman very stable
 (~1.545, 95% CI covering 1.536290, identical across the 4 headrooms);
 Vuong stops favoring lognormal (it was 3 of the 4 cases before; now
 "indistinguishable" in all 4). Two sanity calibrations
 (`stage6_calibration_checks.py`) reveal no artifact: an exact synthetic
-Pareto of index 1.536290 reproduces the same estimator-bias pattern
-seen in the real data (confirms calibration, not bias); recomputing
+Pareto of index 1.536290 reproduces Gabaix-Ibragimov estimates in the
+same low range as the real data at every tail fraction tested
+(1.44-1.53 synthetic vs. 1.42-1.49 real), though the two curves are
+not shaped alike (the synthetic estimate rises monotonically with tail
+fraction, the real one rises then falls); the low bias itself, not its
+exact shape, is what this calibration confirms is a known estimator
+artifact at this $n$, not a real deviation; recomputing
 with a deliberately wrong normalization exponent ($\theta'=0.60$)
 reproduces the SAME numbers, ruling out circularity.
 
@@ -249,16 +295,17 @@ non-rejection, not "power law wins"; and the martingale $W$ provably
 still hasn't converged at the reached headroom (the median drops
 monotonically with headroom even with the tail index already stable).
 But this is the strongest evidence gathered to date in favor of the
-Tail-Index Conjecture for $q=5$, exactly the pattern the paper itself
-proposed as necessary to decide the question.
+real-tree tail conjecture (`conj:real-tree-tail`) for $q=5$, exactly
+the pattern the paper itself proposed as necessary to decide the
+question.
 
 ## Result (`experiment_type_rescaling_sterility.py`): scale family survives extra sterility
 
 For both $q=7$ ($3$ non-sterile types, $a_0=3,2,1$) and $q=15$ ($4$
 non-sterile types, $a_0=4,3,2,1$), all pairwise ratios
 $W_i/W_j$ match the predicted $2^{-(a_0(i)-a_0(j))\theta}$ to within
-$0.2$–$4.2\%$ (tighter than the original $q=5$ finding above, "1–19%").
-This is the empirical half of the paper's footnote (§3, tail-index
+$0.2$-$4.2\%$ (tighter than the original $q=5$ finding above, "1-19%").
+This is the empirical half of the paper's footnote (§5, tail-index
 conjecture discussion) on why extra sterility (when $2$ is not a
 primitive root mod $q$) doesn't disturb the scale family: analytically,
 the multitype pressure matrix restricted to the surviving types
@@ -275,7 +322,7 @@ case, the second zero $\kappa=\alpha_+(q)/\alpha_-(q)$ exists and
 exceeds 1, and the irrationality check (needed for the non-lattice
 condition) passes. This is the numerical half of
 Theorem (`thm:iid-tail` in the paper); the citation itself (Q. Liu, *On
-generalized multiplicative cascades*, SPA 86 (2000), 263–286, Theorem
+generalized multiplicative cascades*, SPA 86 (2000), 263-286, Theorem
 2.2) was checked directly against the primary source; see
 `ResearchOS/projects/collatz/hypotheses/H-132-*.md`.
 
@@ -288,6 +335,29 @@ remark following `thm:lp-collision` (\S3 of the paper) that the finite-level
 $L^2$ collision criterion used in the endogeny-barrier companion paper
 is one member of a family of weighted collision criteria.
 
+## Result (`annealed_identity_direct_enumeration.py`): matches the paper's own numbers exactly
+
+For every $q\in\{3,5,7,9\}$, $k\in\{1,2,3\}$,
+$\alpha\in\{0.26,0.5,1,1.37,2\}$ (the exact grid cited in §3 of the
+paper), the direct sum $\sum_{u_0}Z_k(\alpha;u_0)$ matches the closed
+form $(q^\alpha/(2^\alpha-1))^k$ to within $1.3\times10^{-12}$ (60
+combinations tested, all pass).
+
+## Result (`alpha_c_table.py`): reproduces the §4 table exactly
+
+$\alpha_c(3)=1.355091$, $\alpha_c(5)=0.794222$, $\alpha_c(7)=0.563799$,
+$\alpha_c(9)=0.437407$, each strictly between $\alpha_-(q)$ and
+$\alpha_+(q)$, matching the paper's rounded table to three decimals.
+
+## Result (`quenched_fixed_root_oscillation.py`): confirms the quenched/annealed divergence at both cited roots
+
+At $q=3$, $u_0=1$, $\alpha=2$: $Z_k(2;1)^{1/k}$ oscillates in
+$[0.619,0.650]$ for $k=1,\ldots,12$, staying well below
+$\rho_{\mathrm{ann}}(2)=1$. At $q=5$, $\alpha=1$,
+$u_0\in\{1,2,3,4\}$: $Z_k(1;u_0)^{1/k}$ at $k=16$ gives $0.8920$,
+$0.9315$, $0.9128$, $0.9728$ respectively, all below
+$\rho_{\mathrm{ann}}(1)=1$.
+
 ## Mechanism note
 
 The reverse-tree recursion of Section 2 is not a finite automaton on
@@ -296,5 +366,11 @@ $q^{k+1}$, one digit beyond what mod-$q^k$ knowledge supplies
 (Example~ex:naive-fails in the paper). Section 3 states and proves an
 exact ANNEALED pressure identity instead (via a fiber-bijection lemma),
 with a separate Proposition about the quenched/annealed freezing
-transition, and states the tail index as a conjecture for $q\ge5$. See
+transition. The paper proves the tail index for the matching i.i.d.
+branching model at every odd $q\ge3$ (`thm:iid-tail`); the two
+conjectural counterparts, for the coherent Haar-random $q$-adic
+environment (`conj:tail-index`) and for the actual arithmetic reverse
+tree (`conj:real-tree-tail`), remain open at every $q$, with real,
+independent empirical support at $q=3$ and markedly weaker support for
+$q\ge5$ (see the Stage 6 result above). See
 `ResearchOS/projects/collatz/hypotheses/H-109-*.md` for background.
