@@ -231,7 +231,7 @@ primitive root mod $q$) doesn't disturb the scale family: analytically,
 the multitype pressure matrix restricted to the surviving types
 $\langle2\rangle$ is rank $1$, and its Perron eigenvalue collapses, by
 a $d$-independent cancellation, to exactly the same pressure equation
-$q^{s-1}/(2^s-1)$; see
+$q^{\alpha-1}/(2^\alpha-1)$; see
 `ResearchOS/projects/collatz/hypotheses/H-130-*.md` for the full
 derivation.
 
