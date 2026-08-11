@@ -183,8 +183,10 @@ record of this investigation.
 ## Result (`stage4_type_constants_check.py`) — scale family confirmed, doesn't test κ
 
 Quantile ratios by residue type match the prediction
-$W_i\stackrel{d}{=}2^{-a_0(i)\theta}\cdot W^*$ to within 2–9%
-deviation, across all 4 headrooms and 3 tested tail levels — stable
+$W_i\stackrel{d}{=}2^{-a_0(i)\theta}\cdot W^*$ to within 1–19%
+deviation (36 type-pair/quantile/headroom comparisons; most under 10%,
+the loosest is the top-20% quantile for the type with smallest
+predicted scale), across all 4 headrooms and 3 tested tail levels — stable
 across 4 orders of magnitude. But the tail index $\kappa$ cancels
 algebraically in this ratio (verified): this test confirms $\theta$ and
 the multi-type decomposition, not $\kappa$.
@@ -216,7 +218,7 @@ proposed as necessary to decide the question.
 For both $q=7$ ($3$ non-sterile types, $a_0=3,2,1$) and $q=15$ ($4$
 non-sterile types, $a_0=4,3,2,1$), all pairwise ratios
 $W_i/W_j$ match the predicted $2^{-(a_0(i)-a_0(j))\theta}$ to within
-$1$–$4\%$ (same precision as the original $q=5$ finding above, "2–9%").
+$0.2$–$4.2\%$ (tighter than the original $q=5$ finding above, "1–19%").
 This is the empirical half of the paper's footnote (§3, tail-index
 conjecture discussion) on why extra sterility (when $2$ is not a
 primitive root mod $q$) doesn't disturb the scale family: analytically,
