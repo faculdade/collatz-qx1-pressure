@@ -17,7 +17,10 @@ $q=5$.
 - **`empirical_qx1_tree.py`** — enumerates the REAL reverse tree (not
   the idealized matrix) for $q=5$ and $q=7$ via depth-first search,
   measuring the count slope per decade and comparing against the
-  theoretical prediction. Also exposes `count_tree` and `CYCLES`, reused
+  theoretical prediction. Also runs the early $q=5$ Hill-estimator test
+  (600 roots, headroom $H=10^6$) that the paper cites (§5) as
+  statistically non-confirmatory at that sample size (true standard
+  error $\approx0.45$). Also exposes `count_tree` and `CYCLES`, reused
   by the script below.
 - **`tail_index_q5_rigorous.py`** — the first version of the $W_v$
   tail-index test for $q=5$: 5000 roots, 4 headroom levels
