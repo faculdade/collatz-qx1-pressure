@@ -21,7 +21,14 @@ $q=5$.
   (600 roots, headroom $H=10^6$) that the paper cites (§5) as
   statistically non-confirmatory at that sample size (true standard
   error $\approx0.45$). Also exposes `count_tree` and `CYCLES`, reused
-  by the script below.
+  by the scripts below.
+- **`real_tree_tail_q3.py`**: Hill estimator on the real-tree growth
+  scale factor $W_v(H)$ at $q=3$ (600 roots, headroom $H=10^5$;
+  self-contained, reuses `count_tree` from the script above). At $q=3$,
+  $\alpha_-(3)=1$ exactly, so $W_v(H)=N_v(vH)/H$, no fractional
+  exponent needed. Backs the abstract's and \S5's claim that the
+  predicted index $\alpha^\ast=2$ at $q=3$ matches independent
+  empirical measurements of the real-tree scale factor.
 - **`tail_index_q5_rigorous.py`**: the first version of the $W_v$
   tail-index test for $q=5$: 5000 roots, 4 headroom levels
   ($10^5$–$10^8$), Hill estimator with bootstrap CI at 4 tail
@@ -103,6 +110,7 @@ $q=5$.
 ```
 python3 pressure_qx1.py                 # ~1s, prints the validation table + roots
 python3 empirical_qx1_tree.py           # slower (real-tree enumeration up to 1e12-1e13)
+python3 real_tree_tail_q3.py            # ~1 min, 600 roots at q=3
 python3 tail_index_q5_rigorous.py       # ~20 min (old version, superseded by full_battery.py)
 python3 full_battery.py                 # ~25 min, generates samples + runs the 4 estimators
 python3 exact_moment_test.py            # ~15 min (k up to 11), uses ~10-15GB RAM at peak
@@ -139,6 +147,13 @@ Stable across the 4 headroom levels (e.g. Hill at fraction=5%: ~1.58 in
 all of them). At the 5% fraction (the most balanced), Hill ≈ 1.58 (95%
 CI ≈ [1.41; 1.80]), close to the predicted 1.536, but unstable across
 different fractions (from ~1.39 at 10% to ~2.10 at 1%).
+
+## Result (`real_tree_tail_q3.py`): consistent with the predicted index
+
+$n=600$, $H=10^5$: $W$ ranges from $0.14$ to $67.0$ (median $1.39$).
+Hill estimates at the top $2\%$/$5\%$/$10\%$ tail fractions give
+$2.59$, $2.24$, $1.81$, all within one standard error of the predicted
+$2.0$ (SE $\approx0.75$/$0.41$/$0.23$ respectively).
 
 ## Result (`full_battery.py`): a mixed, non-confirmatory picture
 
@@ -255,14 +270,13 @@ remark following `thm:lp-collision` (\S3 of the paper) that the finite-level
 $L^2$ collision criterion used in the endogeny-barrier companion paper
 is one member of a family of weighted collision criteria.
 
-## Note on the paper's prose (history)
+## Mechanism note
 
-An external review pointed out that an earlier version of Section 3's
-prose described the mechanism imprecisely, as a finite automaton on
-residues mod $q$ (instead of mod $q^k$). This has already been
-corrected in the published paper: Section 3 now states and proves an
-exact ANNEALED pressure identity (via a fiber-bijection lemma), with a
-separate Proposition about the quenched/annealed freezing transition,
-and downgrades the tail index from theorem to conjecture for $q\ge5$.
-See `ResearchOS/projects/collatz/hypotheses/H-109-*.md` for the full
-history of the correction.
+The reverse-tree recursion of Section 2 is not a finite automaton on
+residues mod $q$: the child's residue class depends on the parent mod
+$q^{k+1}$, one digit beyond what mod-$q^k$ knowledge supplies
+(Example~ex:naive-fails in the paper). Section 3 states and proves an
+exact ANNEALED pressure identity instead (via a fiber-bijection lemma),
+with a separate Proposition about the quenched/annealed freezing
+transition, and states the tail index as a conjecture for $q\ge5$. See
+`ResearchOS/projects/collatz/hypotheses/H-109-*.md` for background.
