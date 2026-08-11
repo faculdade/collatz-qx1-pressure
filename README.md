@@ -1,4 +1,4 @@
-# collatz-qx1-pressure — verification material
+# collatz-qx1-pressure: verification material
 
 This repository holds the code and data behind the paper "A Closed-Form
 Pressure Equation for the Accelerated $qx+1$ Branching Process"
@@ -7,7 +7,7 @@ Pressure Equation for the Accelerated $qx+1$ Branching Process"
 Every numerical claim in the paper is reproducible from a script in
 this repository.
 
-The paper (LaTeX/PDF) is **not** here — it lives only in the project's
+The paper (LaTeX/PDF) is **not** here; it lives only in the project's
 main repository. This repository is purely for **verification**.
 
 ## How to use this table
