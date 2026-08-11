@@ -26,9 +26,17 @@ $q=5$.
   scale factor $W_v(H)$ at $q=3$ (600 roots, headroom $H=10^5$;
   self-contained, reuses `count_tree` from the script above). At $q=3$,
   $\alpha_-(3)=1$ exactly, so $W_v(H)=N_v(vH)/H$, no fractional
-  exponent needed. Backs the abstract's and \S5's claim that the
-  predicted index $\alpha^\ast=2$ at $q=3$ matches independent
-  empirical measurements of the real-tree scale factor.
+  exponent needed. Backs the "Hill estimator" half of the abstract's
+  and \S5's claim that the predicted index $\alpha^\ast=2$ at $q=3$
+  matches independent empirical measurements of the real-tree scale
+  factor.
+- **`evt_frechet_q3.py`**: extreme-value-theory (block-maxima) test of
+  the same tail index at $q=3$, backing the "extreme-value theory on
+  block maxima" half of the same claim. By Fisher-Tippett-Gnedenko, if
+  $W_v(H)$ has a regularly varying tail with index $\alpha$, the median
+  of block maxima of size $n$ should grow like $n^{1/\alpha}$; tests
+  this via a log-log regression, plus a secondary GEV fit (scipy).
+  Self-contained, reuses `count_tree` from `empirical_qx1_tree.py`.
 - **`tail_index_q5_rigorous.py`**: the first version of the $W_v$
   tail-index test for $q=5$: 5000 roots, 4 headroom levels
   ($10^5$–$10^8$), Hill estimator with bootstrap CI at 4 tail
@@ -111,6 +119,7 @@ $q=5$.
 python3 pressure_qx1.py                 # ~1s, prints the validation table + roots
 python3 empirical_qx1_tree.py           # slower (real-tree enumeration up to 1e12-1e13)
 python3 real_tree_tail_q3.py            # ~1 min, 600 roots at q=3
+python3 evt_frechet_q3.py               # ~6 min, 2500 values at q=3
 python3 tail_index_q5_rigorous.py       # ~20 min (old version, superseded by full_battery.py)
 python3 full_battery.py                 # ~25 min, generates samples + runs the 4 estimators
 python3 exact_moment_test.py            # ~15 min (k up to 11), uses ~10-15GB RAM at peak
@@ -154,6 +163,15 @@ $n=600$, $H=10^5$: $W$ ranges from $0.14$ to $67.0$ (median $1.39$).
 Hill estimates at the top $2\%$/$5\%$/$10\%$ tail fractions give
 $2.59$, $2.24$, $1.81$, all within one standard error of the predicted
 $2.0$ (SE $\approx0.75$/$0.41$/$0.23$ respectively).
+
+## Result (`evt_frechet_q3.py`): consistent with the predicted index
+
+$N=2500$ values of $W_v(H)$, block sizes $10$ to $150$: the log-log
+regression of median block maximum against block size gives slope
+$0.513$ (predicted $1/\alpha=0.500$ for $\alpha=2$). The secondary GEV
+fit (scipy, block size $100$, $25$ blocks) gives shape $\xi=0.530$
+(predicted $0.500$). Both independent of the Hill estimator above and
+of each other's methodology, both consistent with $\alpha^\ast=2$.
 
 ## Result (`full_battery.py`): a mixed, non-confirmatory picture
 
