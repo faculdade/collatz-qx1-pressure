@@ -352,7 +352,8 @@ $\alpha_+(q)$, matching the paper's rounded table to three decimals.
 ## Result (`quenched_fixed_root_oscillation.py`): confirms the quenched/annealed divergence at both cited roots
 
 At $q=3$, $u_0=1$, $\alpha=2$: $Z_k(2;1)^{1/k}$ oscillates in
-$[0.619,0.650]$ for $k=1,\ldots,12$, staying well below
+$[0.600,0.650]$ for $k=1,\ldots,12$ (the $[0.619,0.650]$ sub-range
+holds from $k=2$ on), staying well below
 $\rho_{\mathrm{ann}}(2)=1$. At $q=5$, $\alpha=1$,
 $u_0\in\{1,2,3,4\}$: $Z_k(1;u_0)^{1/k}$ at $k=16$ gives $0.8920$,
 $0.9315$, $0.9128$, $0.9728$ respectively, all below

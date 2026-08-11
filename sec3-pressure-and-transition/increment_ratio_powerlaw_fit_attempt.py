@@ -67,7 +67,7 @@ def main():
     print("Nao ha convergencia para um unico expoente estavel: o valor "
           "ajustado muda de sinal e varia por um fator de varios entre "
           "valores proximos de p, consistente com um ajuste "
-          "subdimensionado sobre cinco pontos correlacionados "
+          "subdimensionado sobre seis pontos correlacionados "
           "(k=6,...,11 dependem uns dos outros pela mesma recursao).")
 
 
