@@ -233,7 +233,7 @@ divide, by a comparable amount (under 0.2% per step throughout
 $p\in[1.6,1.8]$), the classic signature of a system still relaxing,
 not one where one side has converged and the other has not. A
 power-law fit (`increment_ratio_powerlaw_fit_attempt.py`) to the
-increment-ratio decay across $k=5,\ldots,11$ did not converge to a
+increment-ratio decay across $k=6,\ldots,11$ did not converge to a
 stable exponent: the fitted rate ranges from $-0.72$ to $+0.85$ across
 $p\in[1.2,2.0]$, the signature of an underpowered fit at six
 correlated points (see the terminology correction below for the
