@@ -93,11 +93,10 @@ $q=5$.
   Theorem (`thm:iid-tail` in the paper) (paper §3).
 - **`lp_collision_spectrum.py`** — evaluates the $L^p$ collision
   statistic $\|M_\ell\|_p^p=3^{\ell(p-1)}\sum_x\mu_\ell(x)^p$ for
-  several $p$, reusing the exact recursion of
-  `sec10-l2-refutation-and-jensen/experiment_k_ell.py`. Backs
-  Theorem (`thm:lp-collision` in the paper) (paper §3) and, at the finite level,
-  Empirical Result (`thm:lp-spectrum` in the paper) (paper §10, mirrored again in
-  `sec10-l2-refutation-and-jensen/`).
+  several $p$, reusing the same recursion as the endogeny-barrier
+  companion paper's $L^2$ growth measurement (\S3 of the paper, remark
+  following `thm:lp-collision`). Backs
+  Theorem (`thm:lp-collision` in the paper) (paper §3).
 
 ## How to run
 
@@ -246,10 +245,11 @@ generalized multiplicative cascades*, SPA 86 (2000), 263–286, Theorem
 ## Result (`lp_collision_spectrum.py`) — an exact one-parameter family around the $L^2$ statistic
 
 For $\ell$ up to 14, moments below $p=2$ grow more slowly than $p=2$ on
-the tested range, and moments above $p=2$ grow faster — consistent
-with, but not proof of, a genuine critical index at $p=2$. This finite
-computation is shared with `sec10-l2-refutation-and-jensen/`, where it
-backs the paper's Empirical Result on the finite-level $L^p$ spectrum.
+the tested range, and moments above $p=2$ grow faster: consistent
+with, but not proof of, a critical index at $p=2$. This backs the
+remark following `thm:lp-collision` (\S3 of the paper) that the finite-level
+$L^2$ collision criterion used in the endogeny-barrier companion paper
+is one member of a family of weighted collision criteria.
 
 ## Note on the paper's prose (history)
 
